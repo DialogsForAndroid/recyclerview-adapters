@@ -10,19 +10,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
-import io.github.dialogsforandroid.recyclerviewadapters.library.DynamicSectionsAdapter;
 import io.github.dialogsforandroid.recyclerviewadapters.R;
+import io.github.dialogsforandroid.recyclerviewadapters.library.StaticSectionsAdapter;
+import io.github.dialogsforandroid.recyclerviewadapters.sample.list.FooterViewHolder;
+import io.github.dialogsforandroid.recyclerviewadapters.sample.list.HeaderViewHolder;
+import io.github.dialogsforandroid.recyclerviewadapters.sample.list.ListAdapter;
+import io.github.dialogsforandroid.recyclerviewadapters.sample.list.ZipCodeViewHolder;
 
-public class ZipCodeActivity extends AppCompatActivity {
+public class ZipCodeActivityStatic extends AppCompatActivity {
 
-    private static final String TAG = "ZipCodeActivity";
+    private static final String TAG = "ZipCodeActivityStatic";
 
+    @SuppressWarnings("PointlessArithmeticExpression")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scrolling);
+        setContentView(R.layout.activity_zipcodes);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -35,28 +41,25 @@ public class ZipCodeActivity extends AppCompatActivity {
 
         startTime = System.currentTimeMillis();
 
-        final ListAdapter itemsAdapter = new ListAdapter(1000, 99998);
+        ArrayList<ListAdapter> itemsAdapters = new ArrayList<>();
+        for (int prefix = 1; prefix <= 99; ++prefix) {
+            itemsAdapters.add(new ListAdapter(prefix * 1000, prefix * 1000 + 999));
+        }
 
         endTime = System.currentTimeMillis();
         Log.d(TAG, "Total execution time: " + (endTime-startTime) + "ms");
 
         startTime = System.currentTimeMillis();
 
-        recycler.setAdapter(new DynamicSectionsAdapter<ZipCodeViewHolder, HeaderViewHolder, FooterViewHolder>(itemsAdapter) {
-            @Override
-            protected long getSectionId(int itemAdapterPosition) {
-                int value = itemsAdapter.getValue(itemAdapterPosition);
-                // e.g. zip code 65192 -> 65
-                return value/1000;
-            }
+        recycler.setAdapter(new StaticSectionsAdapter<ZipCodeViewHolder, HeaderViewHolder, FooterViewHolder>(itemsAdapters) {
 
             @Override
-            protected boolean sectionHasHeader(long sectionId) {
+            protected boolean sectionHasHeader(int sectionIndex) {
                 return true;
             }
 
             @Override
-            protected boolean sectionHasFooter(long sectionId) {
+            protected boolean sectionHasFooter(int sectionIndex) {
                 return true;
             }
 
@@ -75,14 +78,14 @@ public class ZipCodeActivity extends AppCompatActivity {
             }
 
             @Override
-            protected void onBindHeaderViewHolder(HeaderViewHolder vh, long sectionId) {
-                String valueAsString = String.format(Locale.US, "%02d", sectionId);
+            protected void onBindHeaderViewHolder(HeaderViewHolder vh, int sectionIndex) {
+                String valueAsString = String.format(Locale.US, "%02d", sectionIndex);
                 vh.setValue("Begin of " + valueAsString);
             }
 
             @Override
-            protected void onBindFooterViewHolder(FooterViewHolder vh, long sectionId) {
-                String valueAsString = String.format(Locale.US, "%02d", sectionId);
+            protected void onBindFooterViewHolder(FooterViewHolder vh, int sectionIndex) {
+                String valueAsString = String.format(Locale.US, "%02d", sectionIndex);
                 vh.setValue("End of " + valueAsString);
             }
         });

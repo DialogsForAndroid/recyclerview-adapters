@@ -1,4 +1,4 @@
-package io.github.dialogsforandroid.recyclerviewadapters.sample;
+package io.github.dialogsforandroid.recyclerviewadapters.sample.list;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,11 +10,11 @@ import java.util.List;
 
 import io.github.dialogsforandroid.recyclerviewadapters.R;
 
-class ListAdapter extends RecyclerView.Adapter<ZipCodeViewHolder> {
+public class ListAdapter extends RecyclerView.Adapter<ZipCodeViewHolder> {
 
     private List<Integer> content = new ArrayList<>(10000);
 
-    ListAdapter(int from, int to) {
+    public ListAdapter(int from, int to) {
         for (int value = from; value <= to; ++value) {
             content.add(value);
         }
@@ -23,7 +23,7 @@ class ListAdapter extends RecyclerView.Adapter<ZipCodeViewHolder> {
     @Override
     public ZipCodeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View contactView = inflater.inflate(R.layout.number_row, parent, false);
+        View contactView = inflater.inflate(R.layout.row_zipcode, parent, false);
         return new ZipCodeViewHolder(contactView);
     }
 
@@ -38,7 +38,7 @@ class ListAdapter extends RecyclerView.Adapter<ZipCodeViewHolder> {
         return content.size();
     }
 
-    int getValue(int position) {
+    public int getValue(int position) {
         return content.get(position);
     }
 }

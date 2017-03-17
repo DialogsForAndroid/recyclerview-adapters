@@ -1,15 +1,12 @@
 package io.github.dialogsforandroid.recyclerviewadapters.sample;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,21 +14,38 @@ import java.util.Locale;
 
 import io.github.dialogsforandroid.recyclerviewadapters.R;
 import io.github.dialogsforandroid.recyclerviewadapters.library.DynamicSectionsAdapter;
+import io.github.dialogsforandroid.recyclerviewadapters.sample.list.FooterViewHolder;
+import io.github.dialogsforandroid.recyclerviewadapters.sample.list.HeaderViewHolder;
+import io.github.dialogsforandroid.recyclerviewadapters.sample.list.ListAdapter;
+import io.github.dialogsforandroid.recyclerviewadapters.sample.list.ZipCodeViewHolder;
 
-public class TestActivity extends AppCompatActivity {
+public class ZipCodeActivityDynamic extends AppCompatActivity {
+
+    private static final String TAG = "ZipCodeActivityDynamic";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
+        setContentView(R.layout.activity_zipcodes);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final ListAdapter itemsAdapter = new ListAdapter(1000, 29998);
-
         RecyclerView recycler = (RecyclerView) findViewById(R.id.recycler);
+        //recycler.setNestedScrollingEnabled(false);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recycler.setLayoutManager(llm);
+
+        long startTime, endTime;
+
+        startTime = System.currentTimeMillis();
+
+        final ListAdapter itemsAdapter = new ListAdapter(1000, 99998);
+
+        endTime = System.currentTimeMillis();
+        Log.d(TAG, "Total execution time: " + (endTime-startTime) + "ms");
+
+        startTime = System.currentTimeMillis();
+
         recycler.setAdapter(new DynamicSectionsAdapter<ZipCodeViewHolder, HeaderViewHolder, FooterViewHolder>(itemsAdapter) {
             @Override
             protected long getSectionId(int itemAdapterPosition) {
@@ -42,7 +56,7 @@ public class TestActivity extends AppCompatActivity {
 
             @Override
             protected boolean sectionHasHeader(long sectionId) {
-                return false;
+                return true;
             }
 
             @Override
@@ -77,19 +91,7 @@ public class TestActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_test, menu);
-        return true;
+        endTime = System.currentTimeMillis();
+        Log.d(TAG, "Total execution time: " + (endTime-startTime) + "ms");
     }
 }
