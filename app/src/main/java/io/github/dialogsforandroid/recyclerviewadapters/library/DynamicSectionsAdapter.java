@@ -60,6 +60,11 @@ abstract public class DynamicSectionsAdapter<
         connectAdapter();
     }
 
+    /**
+     * Rebuilds the proxy index based on the current original adapter content. This must always
+     * happen AFTER the original adapter changed and BEFORE any call to methods that do position
+     * calculation.
+     */
     private void rebuildIndex() {
         Long lastSection = null;
         int itemsAdapterItemsCount = mItemsAdapter.getItemCount();
@@ -188,23 +193,32 @@ abstract public class DynamicSectionsAdapter<
                 @Override
                 public void onChanged() {
                     rebuildIndex();
+
                     DynamicSectionsAdapter.this.notifyDataSetChanged();
                 }
 
                 @Override
                 public void onItemRangeChanged(int positionStart, int itemCount) {
+                    // section ids may have changed with content change
+                    rebuildIndex();
+
                     int targetAdapterPositionStart = calculatePosition(positionStart);
                     DynamicSectionsAdapter.this.notifyItemRangeChanged(targetAdapterPositionStart, itemCount);
                 }
 
                 @Override
                 public void onItemRangeInserted(int positionStart, int itemCount) {
+                    rebuildIndex();
+
                     int targetAdapterPositionStart = calculatePosition(positionStart);
                     DynamicSectionsAdapter.this.notifyItemRangeInserted(targetAdapterPositionStart, itemCount);
                 }
 
                 @Override
                 public void onItemRangeRemoved(int positionStart, int itemCount) {
+                    // removal might merge sections, so index cannot be updated trivially
+                    rebuildIndex();
+
                     int targetAdapterPositionStart = calculatePosition(positionStart);
                     DynamicSectionsAdapter.this.notifyItemRangeRemoved(targetAdapterPositionStart, itemCount);
                 }
@@ -217,6 +231,9 @@ abstract public class DynamicSectionsAdapter<
                                 "This is because RecyclerView.Adapter.notifyItemMove does not have a count parameter. " +
                                 "No idea how to implement that. Feel free to submit a PR.");
                     }
+
+                    rebuildIndex();
+
                     int targetAdapterFromPosition = calculatePosition(fromPosition);
                     int targetAdapterToPosition = calculatePosition(toPosition);
                     DynamicSectionsAdapter.this.notifyItemMoved(
