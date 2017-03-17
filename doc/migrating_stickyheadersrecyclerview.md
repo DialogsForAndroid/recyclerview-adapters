@@ -13,6 +13,7 @@ Migrating from StickyRecyclerHeaders to DynamicSectionsAdapter
  * It is fucking complex (but not complicated), so don't throw this on beginners
  * It is not stable and not well tested
  * It does not support stickyness
+ * Minimal SDK version is 16
 
 ## Get started
 
