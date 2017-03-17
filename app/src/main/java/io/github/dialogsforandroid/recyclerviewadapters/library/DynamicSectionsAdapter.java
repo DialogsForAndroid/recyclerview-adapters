@@ -68,7 +68,7 @@ abstract public class DynamicSectionsAdapter<
 
             if (!itemSection.equals(lastSection)) {
                 if (lastSection != null && sectionHasFooter(lastSection)) {
-                    mIndex.add(new Pair<>(ELEMENT_IS_FOOTER, itemSection));
+                    mIndex.add(new Pair<>(ELEMENT_IS_FOOTER, lastSection));
                 }
 
                 if (sectionHasHeader(itemSection)) {
