@@ -1,7 +1,6 @@
 package io.github.dialogsforandroid.recyclerviewadapters.library;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.Pair;
 import android.view.ViewGroup;
 
@@ -26,7 +25,7 @@ import java.util.ArrayList;
  * @param <SectionHeaderViewHolder>
  * @param <SectionFooterViewHolder>
  */
-@SuppressWarnings({"WeakerAccess", "UnusedParameters"})
+@SuppressWarnings({"WeakerAccess", "UnusedParameters", "unused"})
 abstract public class DynamicSectionsAdapter<
         ItemViewHolder extends RecyclerView.ViewHolder,
         SectionHeaderViewHolder extends RecyclerView.ViewHolder,
@@ -34,6 +33,7 @@ abstract public class DynamicSectionsAdapter<
         > extends RecyclerView.Adapter<WrapperViewHolder<ItemViewHolder, SectionHeaderViewHolder, SectionFooterViewHolder>> {
 
     private static final String TAG = "DynamicSectionsAdapter";
+
     private RecyclerView.Adapter<ItemViewHolder> mItemsAdapter;
 
     /**
@@ -190,7 +190,6 @@ abstract public class DynamicSectionsAdapter<
                 public void onChanged() {
                     rebuildIndex();
                     DynamicSectionsAdapter.this.notifyDataSetChanged();
-                    Log.d(TAG, "DynamicSectionsAdapter.this.notifyDataSetChanged()");
                 }
 
                 @Override

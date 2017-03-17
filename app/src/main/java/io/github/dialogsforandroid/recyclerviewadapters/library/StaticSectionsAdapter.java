@@ -26,12 +26,14 @@ import java.util.List;
  * @param <SectionHeaderViewHolder>
  * @param <SectionFooterViewHolder>
  */
+@SuppressWarnings("unused")
 abstract public class StaticSectionsAdapter<
     ItemViewHolder extends RecyclerView.ViewHolder,
     SectionHeaderViewHolder extends RecyclerView.ViewHolder,
     SectionFooterViewHolder extends RecyclerView.ViewHolder
     > extends RecyclerView.Adapter<WrapperViewHolder<ItemViewHolder, SectionHeaderViewHolder, SectionFooterViewHolder>> {
-    @SuppressWarnings("unused") private static final String TAG = "StaticSectionsAdapter";
+
+    private static final String TAG = "StaticSectionsAdapter";
 
     private List<? extends RecyclerView.Adapter<ItemViewHolder>> mItemsAdapters;
 
