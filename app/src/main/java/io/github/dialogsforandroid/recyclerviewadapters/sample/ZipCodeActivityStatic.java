@@ -79,14 +79,14 @@ public class ZipCodeActivityStatic extends AppCompatActivity {
 
             @Override
             protected void onBindHeaderViewHolder(HeaderViewHolder vh, int sectionIndex) {
-                String valueAsString = String.format(Locale.US, "%02d", sectionIndex);
-                vh.setValue("Begin of " + valueAsString);
+                int groupName = sectionIndex+1;
+                vh.setValue("Begin of " + String.format(Locale.US, "%02d", groupName));
             }
 
             @Override
             protected void onBindFooterViewHolder(FooterViewHolder vh, int sectionIndex) {
-                String valueAsString = String.format(Locale.US, "%02d", sectionIndex);
-                vh.setValue("End of " + valueAsString);
+                int groupName = sectionIndex+1;
+                vh.setValue("End of " + String.format(Locale.US, "%02d", groupName));
             }
         });
 
