@@ -15,9 +15,8 @@ import java.util.ArrayList;
  *
  * Performance considerations: Only use this class when the sections are dynamically generated out
  * of the given data set. Otherwise use StaticSectionsAdapter.
- * To calculate final positions, getSectionId() is called for every position in the original
- * data set in advance, so ensure your implementation is very fast (runtime of getSectionId()
- * times number of elements < 10ms).
+ * To calculate final positions, {@link #getSectionId(int) getSectionId} is called for every
+ * position in the original data set in advance, so ensure your implementation is very fast.
  * All design decisions assume that the number of sections is relatively small compared to the
  * number of items.
  *

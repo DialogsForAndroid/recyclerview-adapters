@@ -11,16 +11,11 @@ import java.util.List;
  * A proxy adapter used to partition the original data into sections and provide an optional
  * header and footer for each section.
  *
- * Use this class when the sections are dynamically generated from the data set (e.g. initial
- * letters of names).
+ * Use this class when the final sections are independent of the data and you can provide
+ * a separate adapter for each section.
  *
- * Performance considerations: Only use this class when the sections are dynamically generated out
- * of the given data set. Otherwise use StaticSectionsAdapter.
- * To calculate final positions, getSectionId() is called for every position in the original
- * data set in advance, so ensure your implementation is very fast (runtime of getSectionId()
- * times number of elements < 10ms).
- * All design decisions assume that the number of sections is relatively small compared to the
- * number of items.
+ * Performance considerations: All design decisions assume that the number of sections is
+ * relatively small compared to the number of items.
  *
  * @param <ItemViewHolder>
  * @param <SectionHeaderViewHolder>
