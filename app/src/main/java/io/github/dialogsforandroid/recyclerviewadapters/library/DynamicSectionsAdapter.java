@@ -111,6 +111,11 @@ abstract public class DynamicSectionsAdapter<
     protected void onBindHeaderViewHolder(SectionHeaderViewHolder vh, long sectionId) {}
     protected void onBindFooterViewHolder(SectionFooterViewHolder vh, long sectionId) {}
 
+    /**
+     * @param position in the wrapper
+     * @return a negative number if position is a supplementary element, the position
+     * in the original adapter otherwise.
+     */
     public int getOriginalPositionForPosition(int position) {
         return mIndex.get(position).first;
     }
