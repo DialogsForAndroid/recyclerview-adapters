@@ -199,7 +199,6 @@ abstract public class DynamicSectionsAdapter<
                 @Override
                 public void onChanged() {
                     rebuildIndex();
-
                     DynamicSectionsAdapter.this.notifyDataSetChanged();
                 }
 
@@ -207,43 +206,27 @@ abstract public class DynamicSectionsAdapter<
                 public void onItemRangeChanged(int positionStart, int itemCount) {
                     // section ids may have changed with content change
                     rebuildIndex();
-
-                    int targetAdapterPositionStart = calculatePosition(positionStart);
-                    DynamicSectionsAdapter.this.notifyItemRangeChanged(targetAdapterPositionStart, itemCount);
+                    DynamicSectionsAdapter.this.notifyDataSetChanged();
                 }
 
                 @Override
                 public void onItemRangeInserted(int positionStart, int itemCount) {
+                    // insertion may create new section
                     rebuildIndex();
-
-                    int targetAdapterPositionStart = calculatePosition(positionStart);
-                    DynamicSectionsAdapter.this.notifyItemRangeInserted(targetAdapterPositionStart, itemCount);
+                    DynamicSectionsAdapter.this.notifyDataSetChanged();
                 }
 
                 @Override
                 public void onItemRangeRemoved(int positionStart, int itemCount) {
                     // removal might merge sections, so index cannot be updated trivially
                     rebuildIndex();
-
-                    int targetAdapterPositionStart = calculatePosition(positionStart);
-                    DynamicSectionsAdapter.this.notifyItemRangeRemoved(targetAdapterPositionStart, itemCount);
+                    DynamicSectionsAdapter.this.notifyDataSetChanged();
                 }
 
                 @Override
                 public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
-                    if (itemCount != 1) {
-                        throw new AssertionError(
-                            "onItemRangeMoved with itemCount other than 1 is not supported. " +
-                                "This is because RecyclerView.Adapter.notifyItemMove does not have a count parameter. " +
-                                "No idea how to implement that. Feel free to submit a PR.");
-                    }
-
                     rebuildIndex();
-
-                    int targetAdapterFromPosition = calculatePosition(fromPosition);
-                    int targetAdapterToPosition = calculatePosition(toPosition);
-                    DynamicSectionsAdapter.this.notifyItemMoved(
-                        targetAdapterFromPosition, targetAdapterToPosition);
+                    DynamicSectionsAdapter.this.notifyDataSetChanged();
                 }
             });
     }
