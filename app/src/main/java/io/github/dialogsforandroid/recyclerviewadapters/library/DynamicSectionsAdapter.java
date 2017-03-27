@@ -66,6 +66,7 @@ abstract public class DynamicSectionsAdapter<
      * calculation.
      */
     private void rebuildIndex() {
+        mIndex.clear();
         Long lastSection = null;
         int itemsAdapterItemsCount = mItemsAdapter.getItemCount();
         for (int itemsAdapterPos = 0; itemsAdapterPos < itemsAdapterItemsCount; ++itemsAdapterPos) {
